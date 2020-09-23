@@ -25,6 +25,7 @@ public class KeepMeAlive implements ActionListener, Runnable
     private JMenu aboutMenu;
     private JMenuItem menuItemClose;
     private JMenuItem menuItemAuthor;
+    private Image icon;
 
     public KeepMeAlive()
     {
@@ -51,8 +52,10 @@ public class KeepMeAlive implements ActionListener, Runnable
         this.buttonEnableDisable = new JButton("Enable");
         this.buttonEnableDisable.setBounds(100, 45, 200, 50);
         this.buttonEnableDisable.setFont(new Font("arial", Font.PLAIN, 20));
-
         this.rootPanel.add(this.buttonEnableDisable);
+
+        //set image icon
+        this.icon = Toolkit.getDefaultToolkit().getImage("c:\\java\\icons\\images\\heart_beating.png");
 
         //set the frame
         this.frame = new JFrame();
@@ -62,6 +65,7 @@ public class KeepMeAlive implements ActionListener, Runnable
         this.frame.setLocationRelativeTo(null);
         this.frame.setContentPane(this.rootPanel);
         this.frame.setJMenuBar(this.menubar);
+        this.frame.setIconImage(this.icon);
         this.frame.pack();
         this.frame.setSize(400, 200);
         this.frame.setVisible(true);
