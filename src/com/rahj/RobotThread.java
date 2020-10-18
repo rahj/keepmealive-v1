@@ -9,10 +9,12 @@ public class RobotThread implements Runnable
     private AtomicBoolean atomicBoolean = new AtomicBoolean();
     private Thread myThread;
     private Robot hal;
+    private int refreshDelay;
 
-    public RobotThread()
+    public RobotThread(int refreshDelay)
     {
         try {
+            this.refreshDelay = (refreshDelay * 1000);
             this.hal = new Robot();
         } catch (AWTException awtEx) {
             System.out.println(awtEx.getMessage());
@@ -23,7 +25,7 @@ public class RobotThread implements Runnable
     public void run()
     {
         while(this.atomicBoolean.get()) {
-            this.hal.delay(1000 * 10);
+            this.hal.delay(this.refreshDelay);
 
             this.hal.keyPress(KeyEvent.VK_F5);
             this.hal.keyRelease(KeyEvent.VK_F5);

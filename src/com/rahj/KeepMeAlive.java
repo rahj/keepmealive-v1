@@ -10,10 +10,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class KeepMeAlive implements ActionListener//, Runnable
+public class KeepMeAlive implements ActionListener
 {
     private Robot hal;
     private JFrame frame;
@@ -26,8 +25,7 @@ public class KeepMeAlive implements ActionListener//, Runnable
     private JMenuItem menuItemAuthor;
     private Image icon;
     private AtomicBoolean atomicBoolean;
-    private Thread myThread;
-    private RobotThread robotThread = new RobotThread();
+    private RobotThread robotThread = new RobotThread(20);
 
     public KeepMeAlive()
     {
@@ -76,9 +74,6 @@ public class KeepMeAlive implements ActionListener//, Runnable
         this.atomicBoolean = new AtomicBoolean();
         this.atomicBoolean.set(true);
 
-        //set the thread
-        //this.myThread = new Thread(this);
-
         //add button action listener
         this.buttonEnableDisable.addActionListener(this);
 
@@ -97,28 +92,12 @@ public class KeepMeAlive implements ActionListener//, Runnable
                 this.buttonEnableDisable.setText("Disable");
 
                 //run the background thread
-                //if (!this.myThread.isAlive()) {
-                    //this.myThread = new Thread(this);
-                    //this.myThread.start();
-                //}
-
                 this.robotThread.start();
                 break;
             case "Disable":
                 this.buttonEnableDisable.setText("Enable");
 
                 //stop the background thread
-                //if (this.myThread.isAlive()) {
-                    //try {
-                        //this.myThread.interrupt();
-                        //this.myThread.stop();
-                        //throw new InterruptedException("Disabling the Refresh Thread");
-                    //} catch (InterruptedException ie) {
-                        //System.out.println(ie.getMessage());
-                    //}
-                    //this.myThread.stop();
-                //}
-
                 this.robotThread.stop();
                 break;
             case "Close":
@@ -135,21 +114,5 @@ public class KeepMeAlive implements ActionListener//, Runnable
         }
 
     }
-
-//    @Override
-//    public void run()
-//    {
-//        while (true) {
-//            try {
-//                this.hal = new Robot();
-//                this.hal.delay(1000 * 60);
-//
-//                this.hal.keyPress(KeyEvent.VK_F5);
-//                this.hal.keyRelease(KeyEvent.VK_F5);
-//            } catch (AWTException awtException) {
-//                System.out.println(awtException.getMessage());
-//            }
-//        }
-//    }
 
 }
