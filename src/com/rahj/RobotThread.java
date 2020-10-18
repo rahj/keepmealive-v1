@@ -1,3 +1,9 @@
+/**
+ * Created a separate Thread controller
+ *
+ * October 18, 2020
+ * by Reynaldo A. Hipolito
+ */
 package com.rahj;
 
 import java.awt.*;
