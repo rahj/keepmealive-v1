@@ -11,21 +11,23 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.util.concurrent.atomic.AtomicBoolean;
 
-public class KeepMeAlive implements ActionListener, Runnable
+public class KeepMeAlive implements ActionListener//, Runnable
 {
     private Robot hal;
     private JFrame frame;
     private JPanel rootPanel;
     private JButton buttonEnableDisable;
-    private boolean buttonBoolean = true;
-    private Thread myThread;
     private JMenuBar menubar;
     private JMenu fileMenu;
     private JMenu aboutMenu;
     private JMenuItem menuItemClose;
     private JMenuItem menuItemAuthor;
     private Image icon;
+    private AtomicBoolean atomicBoolean;
+    private Thread myThread;
+    private RobotThread robotThread = new RobotThread();
 
     public KeepMeAlive()
     {
@@ -70,8 +72,12 @@ public class KeepMeAlive implements ActionListener, Runnable
         this.frame.setSize(400, 200);
         this.frame.setVisible(true);
 
+        //set the button boolean default to true
+        this.atomicBoolean = new AtomicBoolean();
+        this.atomicBoolean.set(true);
+
         //set the thread
-        this.myThread = new Thread(this);
+        //this.myThread = new Thread(this);
 
         //add button action listener
         this.buttonEnableDisable.addActionListener(this);
@@ -89,26 +95,31 @@ public class KeepMeAlive implements ActionListener, Runnable
         switch (actionCommand) {
             case "Enable":
                 this.buttonEnableDisable.setText("Disable");
-                this.buttonBoolean = true;
 
                 //run the background thread
-                if (!this.myThread.isAlive()) {
-                    this.myThread.start();
-                }
+                //if (!this.myThread.isAlive()) {
+                    //this.myThread = new Thread(this);
+                    //this.myThread.start();
+                //}
+
+                this.robotThread.start();
                 break;
             case "Disable":
                 this.buttonEnableDisable.setText("Enable");
-                this.buttonBoolean = false;
 
                 //stop the background thread
-                if (this.myThread.isAlive()) {
-                    try {
-                        this.myThread.interrupt();
-                        throw new InterruptedException("Disabling the Refresh Thread");
-                    } catch (InterruptedException ie) {
-                        System.out.println(ie.getMessage());
-                    }
-                }
+                //if (this.myThread.isAlive()) {
+                    //try {
+                        //this.myThread.interrupt();
+                        //this.myThread.stop();
+                        //throw new InterruptedException("Disabling the Refresh Thread");
+                    //} catch (InterruptedException ie) {
+                        //System.out.println(ie.getMessage());
+                    //}
+                    //this.myThread.stop();
+                //}
+
+                this.robotThread.stop();
                 break;
             case "Close":
                 System.exit(0);
@@ -125,19 +136,20 @@ public class KeepMeAlive implements ActionListener, Runnable
 
     }
 
-    @Override
-    public void run()
-    {
-        while (this.buttonBoolean) {
-            try {
-                this.hal = new Robot();
-                this.hal.delay(1000 * 60);
+//    @Override
+//    public void run()
+//    {
+//        while (true) {
+//            try {
+//                this.hal = new Robot();
+//                this.hal.delay(1000 * 60);
+//
+//                this.hal.keyPress(KeyEvent.VK_F5);
+//                this.hal.keyRelease(KeyEvent.VK_F5);
+//            } catch (AWTException awtException) {
+//                System.out.println(awtException.getMessage());
+//            }
+//        }
+//    }
 
-                this.hal.keyPress(KeyEvent.VK_F5);
-                this.hal.keyRelease(KeyEvent.VK_F5);
-            } catch (AWTException awtException) {
-                System.out.println(awtException.getMessage());
-            }
-        }
-    }
 }
