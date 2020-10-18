@@ -60,7 +60,7 @@ public class KeepMeAlive implements ActionListener
         //set the frame
         this.frame = new JFrame();
         this.frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        this.frame.setTitle("RAHJ KeepMeAlive v.1");
+        this.frame.setTitle("RAHJ KeepMeAlive v.2");
         this.frame.setResizable(false);
         this.frame.setLocationRelativeTo(null);
         this.frame.setContentPane(this.rootPanel);
