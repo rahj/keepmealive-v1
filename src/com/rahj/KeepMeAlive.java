@@ -52,10 +52,12 @@ public class KeepMeAlive implements ActionListener
         this.buttonEnableDisable = new JButton("Enable");
         this.buttonEnableDisable.setBounds(100, 45, 200, 50);
         this.buttonEnableDisable.setFont(new Font("arial", Font.PLAIN, 20));
+        this.buttonEnableDisable.setFocusable(false);
         this.rootPanel.add(this.buttonEnableDisable);
 
         //set image icon
-        this.icon = Toolkit.getDefaultToolkit().getImage("c:\\java\\icons\\images\\heart_beating.png");
+//        this.icon = Toolkit.getDefaultToolkit().getImage("c:\\java\\icons\\images\\heart_beating.png");
+        this.icon = Toolkit.getDefaultToolkit().getImage(getClass().getResource("images/heart_beating.png"));
 
         //set the frame
         this.frame = new JFrame();
